@@ -12,8 +12,10 @@ def prompt(message)
   puts "=> #{message}"
 end
 
+# returns true if matches regexp for numerical value
+# returns false otherwise
 def valid_number?(num)
-  num.to_i != 0
+  num =~ /\-?\d+\.?\d*f?/
 end
 
 def operation_to_message(op)
