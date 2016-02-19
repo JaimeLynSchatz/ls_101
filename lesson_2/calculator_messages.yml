@@ -1,0 +1,12 @@
+# calulator_messages.yml
+
+welcome: "Welcome to Calculator! Enter your name:"
+valid_name: "Make sure to enter a valid name."
+greeting: "Hi, #{name}"
+number1_prompt: "What's the first number?"
+number2_prompt: "What's the second number?"
+number1_response: "The number is #{number1}!"
+number2_response: "The number is #{number2}!"
+operation_prompt: "What operation would you like to perform?\n\t1) add\n\t2) subtract\n\t3) multiply\n\t4) divide"
+result_message: "The result is #{result}"
+quit_ask: "Do you want to quit? (Y to quit)"

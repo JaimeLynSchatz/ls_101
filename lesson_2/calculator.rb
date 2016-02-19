@@ -8,6 +8,9 @@
 # perform the operation on the two numbers
 # output the result
 
+require 'yaml'
+MESSAGES = YAML.load_file('calculator_messages.yml')
+
 def prompt(message)
   puts "=> #{message}"
 end
@@ -19,16 +22,17 @@ def valid_number?(num)
 end
 
 def operation_to_message(op)
-  case op
-  when '1'
-    'Adding'
-  when '2'
-    'Subtracting'
-  when '3'
-    'Multiplying'
-  when '4'
-    'Dividing'
-  end
+  op_to_text = case op
+               when '1'
+                 'Adding'
+               when '2'
+                 'Subtracting'
+               when '3'
+                 'Multiplying'
+               when '4'
+                 'Dividing'
+               end
+  op_to_text
 end
 
 prompt "Wecome to Calculator! Enter your name:"
@@ -98,8 +102,10 @@ while stop != 'Y'
              number1.to_f / number2.to_f
            end
 
-  puts "The result is #{result}"
+  puts MESSAGES['result_message']
 
-  prompt "Do you want to quit? (Y to quit)"
+  prompt MESSAGES['quit_ask']
   stop = gets.chomp
 end
+
+p MESSAGES
