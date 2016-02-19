@@ -23,8 +23,13 @@ def mortgage_calculator(loan_amount, apr, loan_duration)
   # P = loan_amount(c( 1 + c)**loan_duration*12)/((1 + c)**n - 1)
 
   monthly_rate = calculate_monthly_rate(apr)
+  puts "Monthly rate of #{monthly_rate} of #{apr} APR"
   n = calculate_n_months(loan_duration)
+  puts "#{n} months for #{loan_duration} years"
   dividend = ( 1 + monthly_rate )**n -1
+  puts "1 + monthly_rate = #{1 + monthly_rate}"
+  puts "then to the #{n} power = #{(1 + monthly_rate)**n}"
+  puts "minus 1 = #{dividend}?"
   #dividend = dividend**n - 1
   divisor = monthly_rate * ( ( 1 + monthly_rate)**n - 1 )
   #divisor = divisor**n - 1
@@ -36,7 +41,12 @@ def mortgage_calculator(loan_amount, apr, loan_duration)
   puts "You'll make #{n} monthly payments of #{p} each"
 end
 
-mortgage_calculator(100_000, 0.05, 20)
-mortgage_calculator(200_000, 0.05, 20)
-mortgage_calculator(100_000, 0.05, 10)
-mortgage_calculator(100_000, 0.10, 20)
+puts "*****************"
+puts "\n"
+mortgage_calculator(400_000, 0.035, 30)
+puts "\n"
+puts "*****************"
+#mortgage_calculator(100_000, 0.05, 20)
+#mortgage_calculator(200_000, 0.05, 20)
+#mortgage_calculator(100_000, 0.05, 10)
+#mortgage_calculator(100_000, 0.10, 20)
