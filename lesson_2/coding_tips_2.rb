@@ -82,5 +82,42 @@ name = 'johnson'
   puts "#{name} #{name}"
 end
 
+# not variable shadowing
+name = 'johnson'
+
+['kim', 'joe', 'sam'].each do |fname|
+  name = fname
+end
+
+# watch your block variables: |block_variable|
+
+
+# Don't assign when you mean to evaluate
+
+# bad bad bad bad bad
+if some_variable = get_a_value_from_somewhere
+  puts some_variable
+end
+
+# good
+if some_variable == get_a_value_from_somewhere
+  puts some_variable
+end
+
+
+# use _ for unused parameters
+names = ['kim', 'joe', 'sam']
+names.each { |_| puts "got a name!" }
+
+names.each_with_index do |_, index|
+  puts "#{index+1}. Got a name!"
+end
+
+
+# Gain experience through struggling
+# Make mistakes and learn from them
+# lean in to the struggle and learn from it
+# You'll build your muscle memory and mental memory better that way
+
 
 
