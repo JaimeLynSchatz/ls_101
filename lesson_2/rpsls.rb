@@ -26,26 +26,18 @@ def win?(first, second)
   DEFEATS[first].include? second
 end
 
-def increment_winner(winner_score)
-  winner_score += 1
-end
-
-def choose_winner(choice, computer_choice)
-  if choice == computer_choice
+def display_winner(winner)
+  if winner == 'tie'
     "It's a tie!"
-  elsif win?(choice, computer_choice)
+  elsif winner == 'player'
     "You won!"
-    increment_winner(user_score)
   else
     "You lost!"
-    increment_winner(computer_score)
   end
 end
 
-def user_choice
+def player_choice
   choice = ''
-  user_score = 0
-  computer_score = 0
   loop do
     prompt("Choose one: #{VALID_CHOICES.join(', ')}")
     choice = Kernel.gets().chomp()
@@ -59,15 +51,26 @@ def user_choice
 end
 
 loop do
-  choice = user_choice
+  player_score = 0
+  computer_score = 0
+
+  choice = player_choice
   choice = ABBRV[choice] if choice.length <= 2
   computer_choice = VALID_CHOICES.sample
 
   prompt("You chose: #{choice}; Computer chose: #{computer_choice}")
 
-  prompt choose_winner(choice, computer_choice)
+  if win?(choice, computer_choice)
+    player_score += 1
+    prompt display_winner('player')
+  elsif win?(computer_choice, choice)
+    computer_score += 1
+    prompt display_winner('computer')
+  else
+    prompt display_winner('tie')
+  end
 
-  if user_score == 5
+  if player_score == 5
     prompt("You five times!")
   elsif computer_score == 5
     prompt("Too bad, the computer won five times!")
