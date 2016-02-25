@@ -58,4 +58,17 @@ p advice.index("Dino")
 # In the array:
 flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
 # find the index of the first name that starts with "Be"
-p flintstones.index.starts_with("Be")
+puts "******"
+ind = flintstones.index { |name| name[0, 2] == "Be" }
+p ind
+
+# Question 9
+# Using array.map, shorten each of these names to just 3 characters
+flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
+fli = flintstones.map { |name| name = name[0, 3] }
+p fli
+
+
+# Question 10
+# oneliner (simpler)
+flintstones.map { |name| name[0, 3] }
