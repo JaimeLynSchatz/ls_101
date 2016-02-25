@@ -46,3 +46,16 @@ puts ages
 # Question 6
 # Pick out the minimum age from our current Munster family hash
 puts ages.min[1]
+
+
+# Question 7
+# SEe if the name "Dino" appears in the string below
+advice = "Few things in life are as important as house training your pet dinosaur"
+p advice.index("Dino")
+
+
+# Question 8
+# In the array:
+flintstones = %w(Fred Barney Wilma Betty BamBam Pebbles)
+# find the index of the first name that starts with "Be"
+p flintstones.index.starts_with("Be")
