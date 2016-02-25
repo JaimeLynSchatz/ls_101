@@ -52,4 +52,55 @@ name == true # => true
 # Question 3
 # Replace the word "important with "urgent in this string:
 advice = "Few things in life are as important as house training your pet dinosaur."
-advice = advice[0, advice.index('important')] + "urgent" + advice[advice.index('important') + important.length - 1]
+advice = advice[0...advice.index('important')] + "urgent" + advice[advice.index('important') + 'important'.length - 1..-1]
+
+
+# Question 4
+# The Ruby Array class has several methods for removing items from the array.
+# Two have similar names
+numbers = [1, 2, 3, 4, 5]
+numbers.delete_at(1) # 1 is the index of the value to delete
+numbers.delete(1) # 1 is the value to delete
+
+
+# Question 5
+# Programatically determine if 42 lies between 10 and 100
+
+def between?(value, lowest, highest)
+  value > lowest && value < highest
+end
+
+value = 42
+lowest = 10
+highest = 100
+
+puts "#{value} is between #{lowest} and #{highest}: #{between?(value, lowest, highest)}"
+
+
+# Question 6
+# Starting with the string:
+famous_words = "seven years ago..."
+# show two different ways to put the expected "Four score and " in front of it
+
+beginning = "Four score and "
+famous_words = beginning + famous_words
+
+famous_words = "seven years ago..."
+famous_words.insert(0, "Four score and ")
+
+
+# Question 7
+# Fun with gsub
+def add_eight(number)
+  number + 8
+end
+
+number = 2
+
+how_deep = "number"
+5.times { how_deep.gsub!("number", "add_eight(number)") }
+
+p how_deep
+
+
+
