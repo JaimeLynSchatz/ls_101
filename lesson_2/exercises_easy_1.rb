@@ -54,6 +54,8 @@ name == true # => true
 advice = "Few things in life are as important as house training your pet dinosaur."
 advice = advice[0...advice.index('important')] + "urgent" + advice[advice.index('important') + 'important'.length - 1..-1]
 
+#better way
+advice.gsub!('important', 'urgent')
 
 # Question 4
 # The Ruby Array class has several methods for removing items from the array.
@@ -76,6 +78,8 @@ highest = 100
 
 puts "#{value} is between #{lowest} and #{highest}: #{between?(value, lowest, highest)}"
 
+#better way
+(10..100).cover?(42)
 
 # Question 6
 # Starting with the string:
@@ -88,6 +92,8 @@ famous_words = beginning + famous_words
 famous_words = "seven years ago..."
 famous_words.insert(0, "Four score and ")
 
+famous_words = "seven years ago..."
+famous.words.prepend("Four score and ")
 
 # Question 7
 # Fun with gsub
@@ -102,5 +108,28 @@ how_deep = "number"
 
 p how_deep
 
+eval(how_deep) # => 42 
+
+# Question 8
+# If we build an array like this:
+flintstones = ["Fred", "Wilma"]
+flintstones << ["Barney", "Betty"]
+flintstones << ["BamBam", "Pebbles"]
+flintstones.flatten!
 
 
+# Question 9
+# Given the hash below
+flintstones = {"Fred" => 0, "Wilma" => 1, "Barney" => 2, "Betty" => 3, "Pebbles" => 4, "BamBam" => 5 }
+
+barney_array = flintstones.assoc("Barney")
+
+
+# Question 10
+# Given the array below
+flintstones = ["Fred", "Barney", "Wilma", "Betty", "Pebbles", "BamBam"]
+
+flintstones_hash = {}
+flintstones.each_with_index do |name, index|
+  flintstones_hash[name] = index
+end
