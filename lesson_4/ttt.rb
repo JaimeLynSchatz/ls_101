@@ -30,7 +30,6 @@ def initialize_board
 end
 
 def empty_squares(brd)
-  binding.pry
   brd.keys.select { |num| brd[num] == INITIAL_MARKER }
 end
 
@@ -40,8 +39,7 @@ def player_places_piece!(brd)
     prompt "Choose an empty square (#{empty_squares(brd).join(', ')}):"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
-    prompt "Sorry, that's not a valid choice."  
-    # break if square.between?(1, 9) && brd[square] == ' ' # I like this better
+    prompt "Sorry, that's not a valid choice."      
   end
   brd[square] = PLAYER_MARKER
 end
@@ -51,8 +49,23 @@ def computer_places_piece!(brd)
   brd[square] = COMPUTER_MARKER
 end
 
+def board_full?(brd)
+  empty_squares(brd) == []
+  if someone_won?(brd)
+    prompt "There's a winner!"
+  else
+    prompt "It's a tie!"
+end
+
+def someone_won?(brd)
+  false 
+end
+
+def tie?(brd)
+  board_full?(brd) || !someone_won?(brd)
+end
+
 board = initialize_board
-binding.pry
 display_board(board)
 
 loop do
@@ -61,6 +74,6 @@ loop do
   display_board(board)
   
   # leaving off here -- need to review the video, missed something
-  break if empty_squares(board).size == 0
-
+  break if someone_won?(board) || board_full?(board)
+end
 display_board(board)
