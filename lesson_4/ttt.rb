@@ -11,6 +11,13 @@ def prompt(msg)
   puts "=>#{msg}"
 end
 
+def joinor(arr, delim, conjunction = 'or')
+  arr.join('#{delim}')
+  tail = arr.pop
+  arr.push("#{conjunction}").push(tail)
+  arr
+end
+
 # rubocop:disable Metrics/AbcSize
 def display_board(brd)
   system 'clear'
@@ -44,7 +51,7 @@ end
 def player_places_piece!(brd)
   square = ''
   loop do
-    prompt "Choose an empty square (#{empty_squares(brd).join(', ')}):"
+    prompt "Choose an empty square (#{joinor(empty_squares(brd), ', ')}):"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt "Sorry, that's not a valid choice."
