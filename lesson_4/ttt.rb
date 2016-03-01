@@ -62,8 +62,14 @@ def player_places_piece!(brd)
 end
 
 def computer_places_piece!(brd)
-  square = empty_squares(brd).sample
-  brd[square] = COMPUTER_MARKER
+  near_win = detect_threat(brd)
+  if near_win == nil
+    square = empty_squares(brd).sample
+    brd[square] = COMPUTER_MARKER
+  else
+    p near_win
+    square = empty_squares(brd).sample
+    brd[square] = COMPUTER_MARKER
 end
 
 def board_full?(brd)
@@ -91,9 +97,23 @@ def detect_winner(brd)
   nil
 end
 
+def detect_threat(brd)
+  WINNING_LINES.each do |line|
+    if brd.values_at(*line).count(PLAYER_MARKER) == 2
+      # return the one that's blank
+    elsif brd.values_at(*line).count(COMPUTER_MARKER) == 2
+      # return the one that's blank
+    end
+  end
+  nil
+end
+
 def tie?(brd)
   board_full?(brd) || !someone_won?(brd)
 end
+
+player_score = 0
+computer_score = 0
 
 loop do
   board = initialize_board
@@ -110,15 +130,26 @@ loop do
     break if someone_won?(board) || board_full?(board)
   end
 
+  winner = detect_winner(board)
   if someone_won?(board)
-    prompt "#{detect_winner(board)} won!"
+    prompt "#{winner} won!"
   else
     prompt "It's a tie!"
   end
 
-  prompt "Play again? (y or no)"
-  answer = gets.chomp
-  break unless answer.downcase.start_with?('y')
+  if winner == 'Player'
+    player_score += 1
+  elsif winner == 'Computer'
+    computer_score += 1
+  end
+
+  if player_score == 5 || computer_score == 5
+    prompt "#{winner} was victorious!\nPlay again? (y or no)"
+    play_again = gets.chomp
+  else
+    play_again = 'y'
+  end
+  break unless play_again.downcase.start_with?('y')
 end
 
 prompt "Thanks for playing Tic Tac Toe! Goodbye!"
