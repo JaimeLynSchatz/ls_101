@@ -12,10 +12,12 @@ def prompt(msg)
 end
 
 def joinor(arr, delim, conjunction = 'or')
-  arr.join('#{delim}')
-  tail = arr.pop
-  arr.push("#{conjunction}").push(tail)
-  arr
+  # arr.join('#{delim}')
+  # tail = arr.pop
+  # arr.push("#{conjunction}").push(tail)
+  # arr.to_s -- doesn't work the way I want, need .join last
+  arr[-1] = "#{conjunction} #{arr.last}" if arr.size > 1
+  arr.join(delim)
 end
 
 # rubocop:disable Metrics/AbcSize
@@ -51,7 +53,7 @@ end
 def player_places_piece!(brd)
   square = ''
   loop do
-    prompt "Choose an empty square (#{joinor(empty_squares(brd), ', ')}):"
+    prompt "Choose an empty square (#{joinor(empty_squares(brd), ', ', 'and and')}):"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt "Sorry, that's not a valid choice."
