@@ -1,13 +1,20 @@
 require 'pry'
 
-INITIAL_MARKER = ' '
-PLAYER_MARKER = 'X'
-COMPUTER_MARKER = 'O'
+INITIAL_MARKER = ' '.freeze
+PLAYER_MARKER = 'X'.freeze
+COMPUTER_MARKER = 'O'.freeze
+WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
+                [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
+                [[1, 5, 9], [3, 5, 7]].freeze
+
 def prompt(msg)
   puts "=>#{msg}"
 end
 
+# rubocop:disable Metrics/AbcSize
 def display_board(brd)
+  system 'clear'
+  prompt "You're the #{PLAYER_MARKER}"
   puts ""
   puts "     |     |"
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
@@ -22,6 +29,7 @@ def display_board(brd)
   puts "     |     |"
   puts ""
 end
+# rubocop:enable Metrics/AbcSize
 
 def initialize_board
   new_board = {}
@@ -39,7 +47,7 @@ def player_places_piece!(brd)
     prompt "Choose an empty square (#{empty_squares(brd).join(', ')}):"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
-    prompt "Sorry, that's not a valid choice."      
+    prompt "Sorry, that's not a valid choice."
   end
   brd[square] = PLAYER_MARKER
 end
@@ -59,33 +67,49 @@ def board_full?(brd)
 end
 
 def someone_won?(brd)
-  false 
+  detect_winner(brd) == 'Player' || detect_winner(brd) == 'Computer'
 end
 
 def detect_winner(brd)
-  winning_lines = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
-                  [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
-                  [[1, 5, 9], [3, 5, 7]]
-  winning_lines.each do |line|
-    binding.pry
+  WINNING_LINES.each do |line|
+    # use a splat == *line is the same as line[0], line[1], line[2]
+    if brd.values_at(*line).count(PLAYER_MARKER) == 3
+      return 'Player'
+    elsif brd.values_at(*line).count(COMPUTER_MARKER) == 3
+      return 'Computer'
+    end
   end
-
-  "winner name here"
+  nil
 end
 
 def tie?(brd)
   board_full?(brd) || !someone_won?(brd)
 end
 
-board = initialize_board
-display_board(board)
-
 loop do
-  player_places_piece!(board)
-  computer_places_piece!(board)
-  display_board(board)
-  
-  # leaving off here -- need to review the video, missed something
-  break if someone_won?(board) || board_full?(board)
+  board = initialize_board
+
+  loop do
+    display_board(board)
+
+    player_places_piece!(board)
+    display_board(board)
+    break if someone_won?(board) || board_full?(board)
+
+    computer_places_piece!(board)
+    display_board(board)
+    break if someone_won?(board) || board_full?(board)
+  end
+
+  if someone_won?(board)
+    prompt "#{detect_winner(board)} won!"
+  else
+    prompt "It's a tie!"
+  end
+
+  prompt "Play again? (y or no)"
+  answer = gets.chomp
+  break unless answer.downcase.start_with?('y')
 end
-display_board(board)
+
+prompt "Thanks for playing Tic Tac Toe! Goodbye!"
