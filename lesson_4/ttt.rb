@@ -63,13 +63,16 @@ end
 
 def computer_places_piece!(brd)
   near_win = detect_threat(brd)
+  p near_win
   if near_win == nil
+    p near_win
     square = empty_squares(brd).sample
     brd[square] = COMPUTER_MARKER
   else
     p near_win
     square = empty_squares(brd).sample
     brd[square] = COMPUTER_MARKER
+  end
 end
 
 def board_full?(brd)
@@ -100,6 +103,7 @@ end
 def detect_threat(brd)
   WINNING_LINES.each do |line|
     if brd.values_at(*line).count(PLAYER_MARKER) == 2
+      p brd.values_at(*line)
       # return the one that's blank
     elsif brd.values_at(*line).count(COMPUTER_MARKER) == 2
       # return the one that's blank
