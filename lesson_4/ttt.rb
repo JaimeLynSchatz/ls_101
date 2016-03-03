@@ -68,6 +68,10 @@ def computer_places_piece!(brd)
     break if square
   end
 
+  if brd[5] == INITIAL_MARKER
+    square = 5
+  end
+  
   if !square
     square = empty_squares(brd).sample
   end
@@ -103,10 +107,10 @@ end
 def detect_threat(line, brd)
   # best defense is a good offense! Make a winning move before a defending move
   if brd.values_at(*line).count(COMPUTER_MARKER) == 2
-    brd.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
+    brd.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
   elsif brd.values_at(*line).count(PLAYER_MARKER) == 2
-    brd.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
-  else
+    brd.select { |k, v| line.include?(k) && v == INITIAL_MARKER }.keys.first
+  else # rubocop says this is redundant -- but I want to return nil in the else case
     nil
   end
 end
@@ -155,4 +159,4 @@ loop do
   break unless play_again.downcase.start_with?('y')
 end
 
-prompt "Thanks for playing Tic Tac Toe! Goodbye!"
+prompt 'Thanks for playing Tic Tac Toe! Goodbye!'
