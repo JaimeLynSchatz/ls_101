@@ -22,7 +22,7 @@ end
 
 # rubocop:disable Metrics/AbcSize
 def display_board(brd)
-  system 'clear'
+  # system 'clear'
   prompt "You're the #{PLAYER_MARKER}"
   puts ""
   puts "     |     |"
@@ -62,17 +62,17 @@ def player_places_piece!(brd)
 end
 
 def computer_places_piece!(brd)
-  near_win = detect_threat(brd)
-  p near_win
-  if near_win == nil
-    p near_win
-    square = empty_squares(brd).sample
-    brd[square] = COMPUTER_MARKER
-  else
-    p near_win
-    square = empty_squares(brd).sample
-    brd[square] = COMPUTER_MARKER
+  square = nil
+  WINNING_LINES.each do |line|
+    square = detect_threat(line, brd)
+    break if square
   end
+
+  if !square
+    square = empty_squares(brd).sample
+  end
+
+  brd[square] = COMPUTER_MARKER
 end
 
 def board_full?(brd)
@@ -100,16 +100,15 @@ def detect_winner(brd)
   nil
 end
 
-def detect_threat(brd)
-  WINNING_LINES.each do |line|
-    if brd.values_at(*line).count(PLAYER_MARKER) == 2
-      p brd.values_at(*line)
-      # return the one that's blank
-    elsif brd.values_at(*line).count(COMPUTER_MARKER) == 2
-      # return the one that's blank
-    end
+def detect_threat(line, brd)
+  # best defense is a good offense! Make a winning move before a defending move
+  if brd.values_at(*line).count(COMPUTER_MARKER) == 2
+    brd.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
+  elsif brd.values_at(*line).count(PLAYER_MARKER) == 2
+    brd.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
+  else
+    nil
   end
-  nil
 end
 
 def tie?(brd)
