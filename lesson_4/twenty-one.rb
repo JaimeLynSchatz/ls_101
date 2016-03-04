@@ -23,19 +23,74 @@ def fresh_deck
   ]
 end
 
-hand = []
-deck = fresh_deck
-
 def deal_cards(deck, n, hand)
   n.times { hand.push(deck.delete(deck.sample)) }
 end
 
-def add_cards(hand)
-  hand.each do
-    rank = card[1]
+# def ace_check(hand)
+#   hand.each do |card|
+#     card.
+
+# def add_cards(hand)
+#   hand.each do |card|
+#     case card[1]
+#     when 2..10
+#       rank = card[1]
+#     when 1
+#       ace_check(hand)
+#   end
+# end
+
+def total(hand)
+  # cards = [['H', '3'], ['5', 'Q'], ...]
+  values = hand.map { |card| card[1] }
+
+  sum = 0
+  values.each do |value|
+    if value == 'A'
+      sum += 11
+    elsif value.to_i == 0 # J, Q, K
+      sum += 10
+    else
+      sum += value.to_i
+    end
+  end
+
+  # if Aces as 11 busts, drop to 1
+  values.select { |value| value == 'A' }.count.times do
+    sum -= 10 if sum > 21
+  end
+
+  sum
+end
+
+def busted?(hand)
+  if total(hand) > 21
+    true
   end
 end
 
-deal_cards(deck, 5, hand)
+hand = []
+dealer_hand = []
+deck = fresh_deck
 
+loop do
+  p hand
+  p total(hand)
+  puts 'hit or stay?'
+  answer = gets.chomp
+  break if answer == 'stay' || busted?(hand)
+  deal_cards(deck, 1, hand)
+end
 
+if busted?(hand)
+  puts "D'oh, you busted!"
+else
+  puts "You chose to stay with #{hand} at #{total(hand)}"
+end
+
+loop do
+  deal_cards(deck, 1, dealer_hand)
+  p dealer_hand
+  break if total(total(dealer_hand) >= 17)
+end
