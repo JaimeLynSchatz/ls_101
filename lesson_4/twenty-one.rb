@@ -74,6 +74,20 @@ hand = []
 dealer_hand = []
 deck = fresh_deck
 
+def choose_winner(player_hand, dealer_hand)
+  if player_hand > 21
+    "Dealer"
+  elsif player_hand > dealer_hand
+    "Player"
+  elsif dealer_hand > 21
+    "Player"
+  elsif dealer_hand > player_hand
+    "Dealer"
+  else
+    "Total was Player: #{player_hand}, Dealer: #{dealer_hand}"
+  end
+end
+
 loop do
   p hand
   p total(hand)
@@ -92,5 +106,7 @@ end
 loop do
   deal_cards(deck, 1, dealer_hand)
   p dealer_hand
-  break if total(total(dealer_hand) >= 17)
+  break if total(dealer_hand) >= 17
 end
+
+puts "And the winner is: #{choose_winner(total(hand), total(dealer_hand))}"
