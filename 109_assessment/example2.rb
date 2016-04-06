@@ -17,4 +17,6 @@ ipsum "
 frequency = {}
 text = text.gsub('.', '').gsub(',', '').gsub('!', '')
 split_text = text.split(' ')
-p split_text
+split_text.each do |word|
+  frequency << frequency.include?(word)
+end
