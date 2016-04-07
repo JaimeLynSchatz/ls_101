@@ -41,3 +41,25 @@ end
 rotations =  split_string.each_with_index.map { |c, i| split_string.rotate(i) }
 # then compare the two strings with 
 (rotations.uniq - rotations2.uniq).empty? # if all of rotations is within rot2, then it's empty
+
+
+# Given a year, returns the number of Friday the 13ths in that year
+# require 'Date' and use Date::GREGORIAN as the fourth argument to Date.new
+def friday_13(year)
+  (1...12).each.map { |month| Date.new(year, month, 13, Date::GREGORIAN).strftime("%A") }.select { |day| day == "Friday" }.count
+end
+
+p friday_13(1586)
+p friday_13(1001)
+p friday_13(2819)
+
+# est.assert_equals(unlucky_days(1586), 1, "should be: 1")
+# Test.assert_equals(unlucky_days(1001), 3, "should be: 3")
+# Test.assert_equals(unlucky_days(2819), 2, "should be: 2")
+# Test.assert_equals(unlucky_days(2792), 2, "should be: 2")
+# Test.assert_equals(unlucky_days(2723), 2, "should be: 2")
+# Test.assert_equals(unlucky_days(1909), 1, "should be: 1")
+# Test.assert_equals(unlucky_days(1812), 2, "should be: 2")
+# Test.assert_equals(unlucky_days(1618), 2, "should be: 2")
+# Test.assert_equals(unlucky_days(2132), 1, "should be: 1")
+# Test.assert_equals(unlucky_days(2065), 3, "should be: 3")
