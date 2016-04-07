@@ -37,3 +37,7 @@ def longest_palindrome s
   
   
 end
+
+rotations =  split_string.each_with_index.map { |c, i| split_string.rotate(i) }
+# then compare the two strings with 
+(rotations.uniq - rotations2.uniq).empty? # if all of rotations is within rot2, then it's empty
