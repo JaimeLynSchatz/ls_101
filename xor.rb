@@ -53,6 +53,14 @@ p friday_13(1586)
 p friday_13(1001)
 p friday_13(2819)
 
+# Another solution
+# def unlucky_days(year)
+#   (1..12).reduce(0) do |sum, m|
+#     sum += 1 if Date.new(year, m, 13, Date::GREGORIAN).friday?
+#     sum
+#   end
+# end
+
 # est.assert_equals(unlucky_days(1586), 1, "should be: 1")
 # Test.assert_equals(unlucky_days(1001), 3, "should be: 3")
 # Test.assert_equals(unlucky_days(2819), 2, "should be: 2")
@@ -63,3 +71,12 @@ p friday_13(2819)
 # Test.assert_equals(unlucky_days(1618), 2, "should be: 2")
 # Test.assert_equals(unlucky_days(2132), 1, "should be: 1")
 # Test.assert_equals(unlucky_days(2065), 3, "should be: 3")
+
+def openOrSenior(data)
+  data.each.map { |prospect| (prospect.first > 54 && prospect.last > 7) ? "Senior" : "Open" }
+end
+
+# I like this one, it names the variables
+# def openOrSenior(data)
+#   data.map { |age, handicap| age >= 55 && handicap > 7 ? "Senior" : "Open" }
+# end
