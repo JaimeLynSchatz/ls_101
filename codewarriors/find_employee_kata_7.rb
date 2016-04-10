@@ -27,3 +27,39 @@ p find_employees_role("Jaime Schatz")
 # assert_equals(find_employees_role("Dipper Pines"), "Does not work here!")
 # Test.assert_equals(find_employees_role("Morty Smith"), "Truck Driver")
 # Test.assert_equals(find_employees_role("Anna Bell"), "Admin")
+
+def unused_digits *args
+  # your code here
+  all_digits = *('0'..'9')
+  p (all_digits - args.join().split('')).join()
+end
+
+# some better solutions were
+def unused_digits (*nums)
+  "0123456789".delete(*nums.to_s)
+end
+
+def unused_digits(*args)
+  (('0'..'9').to_a - args.join.chars).join
+end
+
+
+def days_until_christmas(day)
+  (Date.new(day.year, 12, 25) - day).to_i
+end
+
+def day_and_time(mins)
+  #your code here
+  
+end
+
+day_and_time(0)       should return 'Sunday 00:00'
+day_and_time(-3)      should return 'Saturday 23:57'
+day_and_time(45)      should return 'Sunday 00:45'
+day_and_time(759)     should return 'Sunday 12:39'
+day_and_time(1236)    should return 'Sunday 20:36'
+day_and_time(1447)    should return 'Monday 00:07'
+day_and_time(7832)    should return 'Friday 10:32'
+day_and_time(18876)   should return 'Saturday 02:36'
+day_and_time(259180)  should return 'Thursday 23:40' 
+day_and_time(-349000) should return 'Tuesday 15:20'
