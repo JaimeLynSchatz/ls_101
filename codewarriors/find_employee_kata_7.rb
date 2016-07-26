@@ -49,8 +49,14 @@ def days_until_christmas(day)
 end
 
 def day_and_time(mins)
-  #your code here
-  
+  # There has got to be a better way than this
+  clock_min = mins % 60
+  hours = mins / 60
+  clock_hour = hours % 24
+  days = hours / 24
+  clock_day = days / 7
+
+
 end
 
 day_and_time(0)       should return 'Sunday 00:00'
